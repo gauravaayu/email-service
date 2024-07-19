@@ -19,12 +19,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-app.post('/send-email', (req, res) => {
+app.post('/sendemail', (req, res) => {
     const { name, email, message } = req.body;
 
     // Email to be sent to the user who submitted the form
     const mailOptionsToUser = {
-        from: 'your-email@gmail.com', // Your email address
+        from: `${process.env.EMAIL_USER}`, // Your email address
         to: email, // User's email address
         subject: 'Confirmation of Your Contact Form Submission',
         text: `Hi ${name},\n\nThank you for reaching out! We received your message:\n\n"${message}"\n\nWe will get back to you shortly.\n\nBest Regards,\nYour Company`
@@ -33,7 +33,7 @@ app.post('/send-email', (req, res) => {
     // Email to be sent to you (or another recipient)
     const mailOptionsToAdmin = {
         from: email,
-        to: 'recipient-email@example.com', // Your email address
+        to: `${process.env.EMAIL_USER}`, // Your email address
         subject: `New Contact Form Submission from ${name}`,
         text: `You have a new contact form submission:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`
     };
